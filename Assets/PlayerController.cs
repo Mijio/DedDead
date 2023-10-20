@@ -14,22 +14,22 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         if (!isCanMove) return;
-        if (Input.GetKey(KeyCode.UpArrow))
+        if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W))
         {
             rb.MovePosition(transform.position + Vector3.up * speed);
             StartCoroutine(WaitForMove());
         }
-        else if (Input.GetKey(KeyCode.DownArrow))
+        else if (Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.S))
         {
             rb.MovePosition(transform.position + Vector3.down * speed);
             StartCoroutine(WaitForMove());
         }
-        else if (Input.GetKey(KeyCode.LeftArrow))
+        else if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A))
         {
             rb.MovePosition(transform.position + Vector3.left * speed);
             StartCoroutine(WaitForMove());
         }
-        else if (Input.GetKey(KeyCode.RightArrow))
+        else if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D))
         {
             rb.MovePosition(transform.position + Vector3.right * speed);
             StartCoroutine(WaitForMove());
