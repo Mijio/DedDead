@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Tilemaps;
@@ -5,8 +6,8 @@ using UnityEngine.Tilemaps;
 public class MapGenerator : MonoBehaviour
 {
     public Tilemap tilemap;
-    public Tile groundTile;
-    public Tile stoneTile;
+    [AssetSelector]
+    public List<Tile> groundTiles;
 
     public int width = 100;
     public int height = 100;
@@ -14,6 +15,7 @@ public class MapGenerator : MonoBehaviour
     public int offsetY = 0;
 
     public float scale = 0.2f;
+    private Dictionary<Vector3Int, int> tileHealth = new Dictionary<Vector3Int, int>();
 
     void Start()
     {
@@ -36,15 +38,7 @@ public class MapGenerator : MonoBehaviour
                 // Применяем Perlin noise для получения значения между 0 и 1
                 float perlinValue = Mathf.PerlinNoise(x * scale, y * scale);
 
-                // Определяем, какой тайл установить в зависимости от значения шума Перлина
-                if (perlinValue > 0.5f)
-                {
-                    tilemap.SetTile(new Vector3Int(x, y, 0), groundTile);
-                }
-                else
-                {
-                    tilemap.SetTile(new Vector3Int(x, y, 0), stoneTile);
-                }
+                tilemap.SetTile(new Vector3Int(x, y, 0), groundTiles[Mathf.FloorToInt(perlinValue * groundTiles.Count)]);
             }
         }
     }
