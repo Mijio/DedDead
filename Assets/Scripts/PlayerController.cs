@@ -43,7 +43,6 @@ public class PlayerController : MonoBehaviour
         else if (Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.S))
         {
             rb.MovePosition(transform.position + Vector3.down * speed);
-            animator.SetTrigger(DigSideHash);
             StartCoroutine(WaitForMove());
         }
         else if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A))
@@ -57,6 +56,7 @@ public class PlayerController : MonoBehaviour
         {
             transform.localScale = new Vector3(-dir, transform.localScale.y, transform.localScale.z);
             rb.MovePosition(transform.position + Vector3.right * speed);
+            animator.SetTrigger(DigSideHash);
             StartCoroutine(WaitForMove());
         }
     }
