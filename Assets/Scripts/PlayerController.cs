@@ -16,12 +16,18 @@ public class PlayerController : MonoBehaviour
     private static readonly int DigSideHash = Animator.StringToHash("DigSide");
     private static readonly int DieHash = Animator.StringToHash("Die");
     private static readonly int WinHash = Animator.StringToHash("Win");
+    private static readonly int dedHash = Animator.StringToHash("DED");
     public bool IsAlive => isAlive;
     float dir = 0;
 
     private void Start()
     {
         dir = transform.localScale.x;
+    }
+    
+    public void SetSkin(int skin)
+    {
+        animator.SetInteger(dedHash, skin);
     }
 
     void Update()
