@@ -10,6 +10,10 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField, ReadOnly] private Rigidbody2D rb;
     [SerializeField, ReadOnly] private Animator animator;
+    [SerializeField] private AudioSource digSound;
+    [SerializeField] private AudioSource digSideSound;
+    [SerializeField] private AudioSource dieSound;
+    
     bool isCanMove = true;
     bool isAlive = true;
     private static readonly int DigUpHash = Animator.StringToHash("DIG");
@@ -28,6 +32,19 @@ public class PlayerController : MonoBehaviour
     public void SetSkin(int skin)
     {
         animator.SetInteger(dedHash, skin);
+    }
+    
+    public void PlayDigSound()
+    {
+        digSound.Play();
+    }
+    public void PlayDigSideSound()
+    {
+        digSideSound.Play();
+    }
+    public void PlayDieSound()
+    {
+        dieSound.Play();
     }
 
     void Update()
