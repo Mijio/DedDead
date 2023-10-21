@@ -14,6 +14,7 @@ public class MapGenerator : MonoBehaviour
     public int offsetX = 0;
     public int offsetY = 0;
 
+    [OnValueChanged("GenerateMap")]
     public float scale = 0.2f;
     private Dictionary<Vector3Int, int> tileHealth = new Dictionary<Vector3Int, int>();
 
