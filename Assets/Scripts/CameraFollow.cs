@@ -35,6 +35,7 @@ public class CameraFollow : MonoBehaviour
     public float rightDeadBound = 0;
     public float upperDeadBound = 0;
     public float lowerDeadBound = 0;
+    
 
     // private
     [SerializeField][ReadOnly] Camera camera;
@@ -100,6 +101,10 @@ public class CameraFollow : MonoBehaviour
         isDeadZoneHorizontal = ((deadZoneType & Direction.Horizontal) == Direction.Horizontal) && isFollowHorizontal;
         isDeadZoneVertical = ((deadZoneType & Direction.Vertical) == Direction.Vertical) && isFollowVertical;
         tempVec = Vector3.one;
+    }
+    public void SetTarget(Transform target)
+    {
+        this.target = target;
     }
 
     void LateUpdate()
