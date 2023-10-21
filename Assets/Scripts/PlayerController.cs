@@ -12,9 +12,18 @@ public class PlayerController : MonoBehaviour
     [SerializeField, ReadOnly] private Animator animator;
     bool isCanMove = true;
     bool isAlive = true;
+    private static readonly int DigUpHash = Animator.StringToHash("DIG");
+    private static readonly int DigSideHash = Animator.StringToHash("DigSide");
     private static readonly int DieHash = Animator.StringToHash("Die");
     private static readonly int WinHash = Animator.StringToHash("Win");
     public bool IsAlive => isAlive;
+    float dir = 0;
+
+    private void Start()
+    {
+        dir = transform.localScale.x;
+    }
+
     void Update()
     {
         if (!isCanMove) return;
@@ -22,20 +31,25 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W))
         {
             rb.MovePosition(transform.position + Vector3.up * speed);
+            animator.SetTrigger(DigUpHash);
             StartCoroutine(WaitForMove());
         }
         else if (Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.S))
         {
             rb.MovePosition(transform.position + Vector3.down * speed);
+            animator.SetTrigger(DigSideHash);
             StartCoroutine(WaitForMove());
         }
         else if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A))
         {
             rb.MovePosition(transform.position + Vector3.left * speed);
+            animator.SetTrigger(DigSideHash);
+            transform.localScale = new Vector3(dir, transform.localScale.y, transform.localScale.z);
             StartCoroutine(WaitForMove());
         }
         else if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D))
         {
+            transform.localScale = new Vector3(-dir, transform.localScale.y, transform.localScale.z);
             rb.MovePosition(transform.position + Vector3.right * speed);
             StartCoroutine(WaitForMove());
         }
@@ -64,6 +78,10 @@ public class PlayerController : MonoBehaviour
         if (rb == null)
         {
             rb = GetComponent<Rigidbody2D>();
+        }
+        if (animator == null)
+        {
+            animator = GetComponent<Animator>();
         }
     }
 }

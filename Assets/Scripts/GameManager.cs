@@ -17,10 +17,19 @@ public class GameManager : MonoBehaviour
     [SerializeField, ReadOnly] private PlayerController playerController;
     
     [SerializeField] private UnityEvent onWin;
+    [SerializeField] private UnityEvent onLose;
     
     private void Start()
     {
         oxygen = oxygenMax;
+    }
+
+    bool isWin = false;
+    public void Win()
+    {
+        if (isWin) return;
+        isWin = true;
+        onWin?.Invoke();
     }
     
     public void AddOxygen(float value)
@@ -34,10 +43,11 @@ public class GameManager : MonoBehaviour
     private void Update()
     {
         if (!playerController.IsAlive) return;
+        if (isWin) return;
         oxygen -= oxygenDecreaseSpeed * Time.deltaTime;
         if (oxygen <= 0)
         {
-            onWin?.Invoke();
+            onLose?.Invoke();
             playerController.Die();
             return;
         }
