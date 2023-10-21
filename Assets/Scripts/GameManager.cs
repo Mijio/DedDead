@@ -30,6 +30,7 @@ public class GameManager : MonoBehaviour
         if (isWin) return;
         isWin = true;
         onWin?.Invoke();
+        playerController.Win();
     }
     
     public void AddOxygen(float value)

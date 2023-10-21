@@ -57,16 +57,13 @@ public class PlayerController : MonoBehaviour
         {
             rb.MovePosition(transform.position + Vector3.up * speed);
             animator.SetTrigger(DigUpHash);
-            StartCoroutine(WaitForMove());
-        }
-        else if (Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.S))
-        {
-            rb.MovePosition(transform.position + Vector3.down * speed);
+            PlayDigSound();
             StartCoroutine(WaitForMove());
         }
         else if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A))
         {
             rb.MovePosition(transform.position + Vector3.left * speed);
+            PlayDigSideSound();
             animator.SetTrigger(DigSideHash);
             transform.localScale = new Vector3(dir, transform.localScale.y, transform.localScale.z);
             StartCoroutine(WaitForMove());
@@ -74,6 +71,7 @@ public class PlayerController : MonoBehaviour
         else if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D))
         {
             transform.localScale = new Vector3(-dir, transform.localScale.y, transform.localScale.z);
+            PlayDigSideSound();
             rb.MovePosition(transform.position + Vector3.right * speed);
             animator.SetTrigger(DigSideHash);
             StartCoroutine(WaitForMove());
@@ -83,6 +81,7 @@ public class PlayerController : MonoBehaviour
     public void Die()
     {
         isAlive = false;
+        PlayDieSound();
         animator.SetTrigger(DieHash);
     }
     public void Win()
