@@ -10,9 +10,11 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField, ReadOnly] private Rigidbody2D rb;
     [SerializeField, ReadOnly] private Animator animator;
-    [SerializeField] private AudioSource digSound;
-    [SerializeField] private AudioSource digSideSound;
-    [SerializeField] private AudioSource dieSound;
+    [SerializeField, ReadOnly] private AudioSource source;
+    
+    [SerializeField] private AudioClip digSound;
+    [SerializeField] private AudioClip digSideSound;
+    [SerializeField] private AudioClip dieSound;
     
     bool isCanMove = true;
     bool isAlive = true;
@@ -36,15 +38,15 @@ public class PlayerController : MonoBehaviour
     
     public void PlayDigSound()
     {
-        digSound.Play();
+        source.PlayOneShot(digSound);
     }
     public void PlayDigSideSound()
     {
-        digSideSound.Play();
+        source.PlayOneShot(digSideSound);
     }
     public void PlayDieSound()
     {
-        dieSound.Play();
+        source.PlayOneShot(dieSound);
     }
 
     void Update()
@@ -105,6 +107,10 @@ public class PlayerController : MonoBehaviour
         if (animator == null)
         {
             animator = GetComponent<Animator>();
+        }
+        if (source == null)
+        {
+            source = GetComponent<AudioSource>();
         }
     }
 }
