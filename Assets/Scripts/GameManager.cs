@@ -1,7 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Sirenix.OdinInspector;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
@@ -12,8 +14,10 @@ public class GameManager : MonoBehaviour
     
     private float oxygen;
     
+    [SerializeField, ReadOnly] private PlayerController playerController;
     
-
+    [SerializeField] private UnityEvent onWin;
+    
     private void Start()
     {
         oxygen = oxygenMax;
@@ -29,10 +33,12 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
+        if (!playerController.IsAlive) return;
         oxygen -= oxygenDecreaseSpeed * Time.deltaTime;
         if (oxygen <= 0)
         {
-            Debug.Log("Game Over");
+            onWin?.Invoke();
+            playerController.Die();
             return;
         }
         UpdateOxygenBar();
@@ -41,5 +47,9 @@ public class GameManager : MonoBehaviour
     {
         oxygenBar.fillAmount = oxygen / oxygenMax;
     }
-    
+
+    private void OnValidate()
+    {
+        playerController = FindObjectOfType<PlayerController>();
+    }
 }
